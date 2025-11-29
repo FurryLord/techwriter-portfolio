@@ -1,7 +1,6 @@
 {
   "rules": {
     "no-todo": true,
-    "no-start-dupe": true,
     "max-comma": {
       "max": 3
     },
@@ -26,6 +25,9 @@
         ["технический писатель", "технический писатель"]
       ]
     },
-    "no-unmatched-pair": true
+    "no-unmatched-pair": true,
+    "common-misspellings": {
+      "severity": "warning"
+    }
   }
 }

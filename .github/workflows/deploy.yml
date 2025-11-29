@@ -19,7 +19,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
 
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v3
@@ -31,13 +31,13 @@ jobs:
       run: |
         npm install -g textlint
         npm install -g textlint-rule-no-todo
-        npm install -g textlint-rule-no-start-dupe
         npm install -g textlint-rule-max-comma
         npm install -g textlint-rule-period-in-list-item
         npm install -g textlint-rule-stop-words
         npm install -g textlint-rule-write-good
         npm install -g textlint-rule-terminology
         npm install -g @textlint-rule/textlint-rule-no-unmatched-pair
+        npm install -g textlint-rule-common-misspellings
 
     - name: Create textlint config
       run: |
