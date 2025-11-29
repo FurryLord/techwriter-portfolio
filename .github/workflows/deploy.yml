@@ -43,7 +43,7 @@ jobs:
     - name: Text quality checks
       run: |
         # Run textlint on markdown files
-        find content -name "*.md" -exec textlint {} \;
+        find content -name "*.md" -exec textlint --config .textlintrc {} \;
 
     - name: Check for broken links
       run: |
