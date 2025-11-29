@@ -45,7 +45,6 @@ jobs:
         {
           "rules": {
             "no-todo": true,
-            "no-start-dupe": true,
             "max-comma": {
               "max": 3
             },
@@ -53,7 +52,7 @@ jobs:
               "periodMark": "."
             },
             "stop-words": {
-              "words": ["very", "really", "actually", "just"]
+              "words": ["очень", "действительно", "просто"]
             },
             "write-good": {
               "severity": "warning"
@@ -65,10 +64,15 @@ jobs:
                 ["back-end", "backend"],
                 ["JavaScript", "JavaScript"],
                 ["GitHub", "GitHub"],
-                ["Markdown", "Markdown"]
+                ["Markdown", "Markdown"],
+                ["ОС Аврора", "Aurora OS"],
+                ["технический писатель", "технический писатель"]
               ]
             },
-            "no-unmatched-pair": true
+            "no-unmatched-pair": true,
+            "common-misspellings": {
+              "severity": "warning"
+            }
           }
         }
         EOF
