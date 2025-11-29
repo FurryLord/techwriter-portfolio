@@ -1,0 +1,32 @@
+baseURL = 'https://arseniy-rusin.github.io/techwriter-portfolio/'
+languageCode = 'ru-ru'
+title = 'Арсений Русин - Технический писатель'
+theme = 'hugo-book'
+
+# Book configuration
+disablePathToLower = true
+enableGitInfo = false
+
+# Needed for mermaid/katex shortcodes
+[markup]
+[markup.goldmark.renderer]
+  unsafe = true
+
+[markup.tableOfContents]
+  startLevel = 1
+
+[markup.highlight]
+  style = 'base16-snazzy'
+
+[params]
+  # (Optional, default light) Sets color theme: light, dark or auto.
+  BookTheme = 'light'
+
+  # (Optional, default docs) Specify root page to render child pages as menu.
+  BookSection = 'docs'
+
+  # (Optional, default true) Enables search function with fuse.js
+  BookSearch = true
+
+  # (Optional, default true) Enables comments template on pages
+  BookComments = false

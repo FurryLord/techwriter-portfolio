@@ -1,0 +1,155 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # Check job - runs on PRs and pushes
+  check:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v3
+      with:
+        hugo-version: 'latest'
+        extended: true
+
+    - name: Install textlint
+      run: |
+        npm install -g textlint
+        npm install -g textlint-rule-no-todo
+        npm install -g textlint-rule-no-start-dupe
+        npm install -g textlint-rule-max-comma
+        npm install -g textlint-rule-period-in-list-item
+        npm install -g textlint-rule-stop-words
+        npm install -g textlint-rule-write-good
+        npm install -g textlint-rule-terminology
+        npm install -g @textlint-rule/textlint-rule-no-unmatched-pair
+
+    - name: Create textlint config
+      run: |
+        cat > .textlintrc << 'EOF'
+        {
+          "rules": {
+            "no-todo": true,
+            "no-start-dupe": true,
+            "max-comma": {
+              "max": 3
+            },
+            "period-in-list-item": {
+              "periodMark": "."
+            },
+            "stop-words": {
+              "words": ["very", "really", "actually", "just"]
+            },
+            "write-good": {
+              "severity": "warning"
+            },
+            "terminology": {
+              "defaultTerms": false,
+              "terms": [
+                ["front-end", "frontend"],
+                ["back-end", "backend"],
+                ["JavaScript", "JavaScript"],
+                ["GitHub", "GitHub"],
+                ["Markdown", "Markdown"]
+              ]
+            },
+            "no-unmatched-pair": true
+          }
+        }
+        EOF
+
+    - name: Check spelling and grammar
+      run: |
+        # Install aspell for spell checking
+        sudo apt-get update
+        sudo apt-get install -y aspell aspell-ru
+
+        # Check markdown files for spelling errors
+        find content -name "*.md" -exec aspell --lang=ru_RU --mode=markdown --personal=./.aspell.en.pws check {} \;
+
+    - name: Text quality checks
+      run: |
+        # Run textlint on markdown files
+        find content -name "*.md" -exec textlint {} \;
+
+    - name: Check for broken links
+      run: |
+        # Install link checker
+        npm install -g markdown-link-check
+
+        # Check all markdown files for broken links
+        find content -name "*.md" -exec markdown-link-check {} \;
+
+    - name: Check markdown formatting
+      run: |
+        # Install markdown linter
+        npm install -g markdownlint-cli
+
+        # Create markdownlint config
+        cat > .markdownlint.json << 'EOF'
+        {
+          "default": true,
+          "MD013": false,
+          "MD024": false,
+          "MD033": false,
+          "MD036": false,
+          "MD041": false
+        }
+        EOF
+
+        # Run markdown linter
+        markdownlint "content/**/*.md"
+
+    - name: Build site for testing
+      run: |
+        hugo --minify
+
+    - name: Check HTML validity
+      run: |
+        # Install HTML validator
+        npm install -g html-validate
+
+        # Validate generated HTML
+        find public -name "*.html" -exec html-validate {} \;
+
+  # Deploy job - runs only on main branch pushes
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: check
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v3
+      with:
+        hugo-version: 'latest'
+        extended: true
+
+    - name: Build
+      run: hugo --minify
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
+        cname: ${{ secrets.CNAME || '' }}

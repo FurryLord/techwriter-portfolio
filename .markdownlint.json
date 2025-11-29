@@ -1,0 +1,19 @@
+{
+  "default": true,
+  "MD003": {
+    "style": "atx"
+  },
+  "MD004": {
+    "style": "dash"
+  },
+  "MD013": false,
+  "MD024": false,
+  "MD033": {
+    "allowed_elements": ["br", "kbd", "details", "summary", "button", "mermaid", "katex"]
+  },
+  "MD036": false,
+  "MD041": false,
+  "MD046": {
+    "style": "fenced"
+  }
+}
