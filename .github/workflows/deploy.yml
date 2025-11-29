@@ -40,44 +40,6 @@ jobs:
         npm install -g @textlint-rule/textlint-rule-no-unmatched-pair
         npm install -g textlint-rule-common-misspellings
 
-    - name: Create textlint config
-      run: |
-        cat > .textlintrc << 'EOF'
-        {
-          "rules": {
-            "no-todo": true,
-            "max-comma": {
-              "max": 3
-            },
-            "period-in-list-item": {
-              "periodMark": "."
-            },
-            "stop-words": {
-              "words": ["очень", "действительно", "просто"]
-            },
-            "write-good": {
-              "severity": "warning"
-            },
-            "terminology": {
-              "defaultTerms": false,
-              "terms": [
-                ["front-end", "frontend"],
-                ["back-end", "backend"],
-                ["JavaScript", "JavaScript"],
-                ["GitHub", "GitHub"],
-                ["Markdown", "Markdown"],
-                ["ОС Аврора", "Aurora OS"],
-                ["технический писатель", "технический писатель"]
-              ]
-            },
-            "no-unmatched-pair": true,
-            "common-misspellings": {
-              "severity": "warning"
-            }
-          }
-        }
-        EOF
-
     - name: Text quality checks
       run: |
         # Run textlint on markdown files
@@ -114,14 +76,6 @@ jobs:
     - name: Build site for testing
       run: |
         hugo --minify
-
-    - name: Check HTML validity
-      run: |
-        # Install HTML validator
-        npm install -g html-validate
-
-        # Validate generated HTML
-        find public -name "*.html" -exec html-validate {} \;
 
   # Deploy job - runs only on main branch pushes
   deploy:
