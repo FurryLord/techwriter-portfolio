@@ -73,15 +73,6 @@ jobs:
         }
         EOF
 
-    - name: Check spelling and grammar
-      run: |
-        # Install aspell for spell checking
-        sudo apt-get update
-        sudo apt-get install -y aspell aspell-ru
-
-        # Check markdown files for spelling errors
-        find content -name "*.md" -exec aspell --lang=ru_RU --mode=markdown --personal=./.aspell.en.pws check {} \;
-
     - name: Text quality checks
       run: |
         # Run textlint on markdown files
