@@ -1,0 +1,15 @@
+{
+  "name": "Арсений Русин - Технический писатель",
+  "short_name": "Арсений Русин - Технический писатель",
+  "start_url": "/techwriter-portfolio/",
+  "scope": "/techwriter-portfolio/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/techwriter-portfolio/favicon.svg",
+      "sizes": "512x512"
+    }
+  ]
+}
