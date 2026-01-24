@@ -58,18 +58,6 @@ jobs:
         # Install markdown linter
         npm install -g markdownlint-cli
 
-        # Create markdownlint config
-        cat > .markdownlint.json << 'EOF'
-        {
-          "default": true,
-          "MD013": false,
-          "MD024": false,
-          "MD033": false,
-          "MD036": false,
-          "MD041": false
-        }
-        EOF
-
         # Run markdown linter
         markdownlint "content/**/*.md"
 
