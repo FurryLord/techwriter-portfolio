@@ -8,6 +8,7 @@
   },
   "MD013": false,
   "MD024": false,
+  "MD025": false,
   "MD033": {
     "allowed_elements": ["br", "kbd", "details", "summary", "button", "mermaid", "katex"]
   },
@@ -15,5 +16,6 @@
   "MD041": false,
   "MD046": {
     "style": "fenced"
-  }
+  },
+  "MD051": false
 }
